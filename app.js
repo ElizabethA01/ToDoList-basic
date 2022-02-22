@@ -4,12 +4,18 @@ const bodyParser = require("body-parser");
 const app = express();
 
 let items = [];
+let workItems = [];
 
 // set the view engine to ejs
 app.set("view engine", "ejs");
 
 // bodyParser module needs to be set to use req.body
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+// access static files
+app.use(express.static("public"));
 
 // index page
 
@@ -27,7 +33,10 @@ app.get("/", function(req, res) {
 
   // use res.render to load up an ejs view file
   // rendering a file called list inside views folder with extension ejs and giving a value day to the letiable kindofDay
-  res.render("list", {kindOfDay: day, newListItems: items});
+  res.render("list", {
+    listTitle: day,
+    newListItems: items
+  });
 
 });
 
@@ -39,6 +48,21 @@ app.post("/", function(req, res) {
 
   res.redirect("/");
 
+});
+
+app.get("/work", function(req, res) {
+  res.render("list", {
+    listTitle: "Work List",
+    newListItems: workItems
+  });
+});
+
+app.post("/work", function(req, res) {
+  let item = req.body.newItem;
+
+  workItemsitems.push(item);
+
+  res.redirect("/work");
 })
 
 app.listen(3000, function() {
