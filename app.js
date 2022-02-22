@@ -43,11 +43,13 @@ app.get("/", function(req, res) {
 app.post("/", function(req, res) {
   let item = req.body.newItem;
 
-  // adding each item to the list of items
-  items.push(item);
-
-  res.redirect("/");
-
+  if (req.body.list === "Work") {
+    workItems.push(item);
+    res.redirect("/work");
+  } else {
+    items.push(item);
+    res.redirect("/");
+  }
 });
 
 app.get("/work", function(req, res) {
@@ -57,12 +59,8 @@ app.get("/work", function(req, res) {
   });
 });
 
-app.post("/work", function(req, res) {
-  let item = req.body.newItem;
-
-  workItemsitems.push(item);
-
-  res.redirect("/work");
+app.get("/about", function(req, res) {
+  res.render("about");
 })
 
 app.listen(3000, function() {
