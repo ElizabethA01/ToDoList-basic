@@ -1,10 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
+// requiring a module that is saved locally
+const date = require(__dirname + "/date.js");
+
 const app = express();
 
-let items = [];
-let workItems = [];
+// declaring arrays as const
+const items = [];
+const workItems = [];
 
 // set the view engine to ejs
 app.set("view engine", "ejs");
@@ -18,21 +22,13 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 // index page
-
 app.get("/", function(req, res) {
 
-  let today = new Date();
-
-  //formatting the date string
-  let options = {
-    weekday: "long",
-    day: "numeric",
-    month: "long"
-  };
-  let day = today.toLocaleDateString("en-US", options);
+  // inputting date.js module here
+  const day = date.getDate();
 
   // use res.render to load up an ejs view file
-  // rendering a file called list inside views folder with extension ejs and giving a value day to the letiable kindofDay
+  // rendering a file called list inside views folder with extension ejs and giving a value day to the constiable kindofDay
   res.render("list", {
     listTitle: day,
     newListItems: items
@@ -41,7 +37,7 @@ app.get("/", function(req, res) {
 });
 
 app.post("/", function(req, res) {
-  let item = req.body.newItem;
+  const item = req.body.newItem;
 
   if (req.body.list === "Work") {
     workItems.push(item);
