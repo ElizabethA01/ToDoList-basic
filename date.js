@@ -1,6 +1,5 @@
 // creating a module for date.js to carry out the code
 
-
 // creating and exporting a function to main app.js
 
 exports.getDate = function () {
